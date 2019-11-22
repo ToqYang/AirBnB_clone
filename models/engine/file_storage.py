@@ -2,7 +2,7 @@
 """Module FileStorage"""
 
 import json
-import os
+import models
 
 
 class FileStorage:
@@ -33,37 +33,30 @@ class FileStorage:
 
         def reload(self):
             """ Deserializes the JSON file to __objects if it exists """
-            from models.base_model import BaseModel
-            from models.user import User
-            from models.state import State
-            from models.city import City
-            from models.amenity import Amenity
-            from models.place import Place
-            from models.review import Review
             try:
                 with open(self.__file_path, "r") as f:
                     dict_of_dicts = json.loads(f.read())
                     for k, d in dict_of_dicts.items():
                         if(d['__class__'] == "BaseModel"):
-                            b = BaseModel(**d)
+                            b = models.BaseModel(**d)
                             FileStorage.__objects[k] = b
                         elif(d['__class__'] == "User"):
-                            u = User(**d)
+                            u = models.User(**d)
                             FileStorage.__objects[k] = u
                         elif(d['__class__'] == "State"):
-                            s = State(**d)
+                            s = models.State(**d)
                             FileStorage.__objects[k] = s
                         elif(d['__class__'] == "City"):
-                            c = City(**d)
+                            c = models.City(**d)
                             FileStorage.__objects[k] = c
                         elif(d['__class__'] == "Amenity"):
-                            a = Amenity(**d)
+                            a = models.Amenity(**d)
                             FileStorage.__objects[k] = a
                         elif(d['__class__'] == "Place"):
-                            p = Place(**d)
+                            p = models.Place(**d)
                             FileStorage.__objects[k] = p
                         elif(d['__class__'] == "Review"):
-                            r = Review(**d)
+                            r = models.Review(**d)
                             FileStorage.__objects[k] = r
             except:
                 pass
